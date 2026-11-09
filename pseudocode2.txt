@@ -1,0 +1,93 @@
+# Start Writing Here
+
+CLASS HashMap
+BEGIN
+    integer numOfElements
+    integer capacity;
+    array array; 
+ 
+    BEGIN Constuctor HashMap
+        capacity ← 1
+        buckets ← 0
+        Create array of size capacity
+        array[0] ← NULL;
+    End Constuctor
+        
+ 
+    Function HashFunc(STRING key)
+        integer index 
+        integer sum ← 0
+        integer prime // choose some prime number
+        For (i ← 0 Until i is less than key.size())
+            sum ← sum + (ASCII of key[i] * prime) Mod this.capacity)
+        Endfor
+        index ← sum;
+        Return index;
+    endfunction
+    
+ 
+    Function CalculateLoadFactor()
+        Return this.buckets / this.capacity;
+    endfunction
+
+ 
+    Function Rehashing()
+        integer oldCapacity ← old_capacity;
+        temp ← old_array;
+        
+        // double the size and create new array
+        newCapacity ← oldCapacity * 2; 
+        newArray ← ARRAY [newCapacity]; 
+        
+        For (i ← 0 Until i is less than newCapacity)
+            newArray[i] ← NULL
+            Increment i
+        Endfor
+            
+        For (i ← 0 Until i is less than oldCapacity) 
+            get bucketHead of temp[i];
+            // check if there is a linked list at the index
+            While (bucketHead ≠ NULL) 
+                // re-insert each key-value pair
+                Call Insert(bucketHead.key, bucketHead.value); 
+                bucketHead ← bucketHead.next;
+            Endwhile 
+            Increment i
+        Endfor
+        Delete temp
+        Return
+    endfunction
+
+ 
+    Function Insert(key, value)
+        While (CalculateLoadFactor() is greater than 0.75) 
+            Call Rehashing();
+        Endwhile
+ 
+        integer index ← Call HashFunct(key)
+        // if there is no list at the position index in array
+        If (array[index] is equal to NULL) 
+            Create a newNode with INSERT_NODE(key, value)
+            array[index] ← newNode
+        // else 
+        Else 
+            Create a newNode with INSERT_NODE(key, value)
+            newNode.next ← array[index];
+            array[index] ← newNode
+        Endif
+        Return
+    endfunction
+        
+    Function Search(key)
+        integer index ← Call HashFunct(key)
+        bucketHead ← array[index]
+        While (bucketHead ≠ NULL) 
+            If (bucketHead.key is equal to key)
+                Return bucketHead.value
+            Endif
+            bucketHead ← bucketHead.next
+        Endwhile
+        Return "Error:Not Found"
+    endfunction
+    
+END of CLASS

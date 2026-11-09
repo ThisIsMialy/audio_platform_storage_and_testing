@@ -1,0 +1,81 @@
+// Doubly Linked List
+CLASS TRACK 
+BEGIN
+    string title
+    string artist
+    integer duration
+    
+    BEGIN Constructor TRACK(title, artist, duration)
+        title ← title
+        artist ← artist
+        duration ← duration
+    END Constructor
+    
+    Function Display()
+        Display "Title:" Title
+        Display "Artist:" Title
+        Display "Duration:" Title
+    endfunction
+    
+END Track
+
+    
+
+Class Node 
+BEGIN
+    TRACK track;
+    struct Node* next;
+    struct Node* prev;
+END Node
+    
+
+Function INSERT_NODE (head, track)
+    Create Node* newNode
+    Create Node* last ← *head
+    
+    newNode.track  ← track
+    
+    // new node is now the last node
+    newNode.next ← NULL
+    
+    // if list is empty, make newNode the head of list
+    If ((*head ) is equal to NULL)
+        newNode.prev ← NULL
+        *head ← newNode
+        
+    // Else go to last node of the list
+    Else
+        // Find the node whose .next is NULL
+        While (last.next ≠ NULL)
+            last ← last.next
+        
+        // set next of last to newNode
+        // set last to prev of newNode
+        last.next ← newNode
+        newNode.prev ← last
+        Endwhile
+    Endif 
+endfunction
+
+ 
+Function DELETE_NODE (head, delNode)
+    If (*head is NULL OR delNode is NULL)
+        Return
+    Endif
+    
+    If (*head is equal to delNode)
+        *head ← delNode.next
+    Endif
+    
+    If (delNode.next ≠ NULL)
+        delNode.next.prev ← delNode.prev
+    Endif
+    
+    If (del.prev ≠ NULL)
+        del.prev.next ← del.next
+    Endif
+    
+    DELETE delNode
+    
+endfunction
+    
